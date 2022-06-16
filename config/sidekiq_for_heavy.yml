@@ -1,0 +1,14 @@
+:verbose: false
+:pidfile: ./tmp/sidekiq_for_heavy.pid
+:logfile: ./log/sidekiq_for_heavy.log
+:concurrency: 6
+:queues:
+  - csv_import_for_heavy_companies
+  - csv_import_for_light_companies
+:limits:
+  csv_import_for_heavy_companies: 3
+  csv_import_for_light_companies: 3
+:schedule:
+  test:
+    # cron: "0 * * * * *" # 毎分0秒
+    class: SampleWorkerForHeavy

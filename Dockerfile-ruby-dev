@@ -1,6 +1,5 @@
 FROM ruby:2.7.5-alpine
 
-MAINTAINER Hiroyuki Tanaka <h.tanaka@datora.jp>
 
 ENV BUILD_PACKAGES="vim curl curl-dev ruby-dev build-base bash less" \
     DEV_PACKAGES="zlib-dev libxml2-dev libxslt-dev tzdata yaml-dev sqlite-dev postgresql-dev mysql-dev imagemagick imagemagick-dev imagemagick-c++ ffmpeg py-pip shared-mime-info" \
@@ -11,7 +10,7 @@ ENV BUILD_PACKAGES="vim curl curl-dev ruby-dev build-base bash less" \
 
 ### set bundler version ###########################
 
-ENV BUNDLER_VERSION 2.1.0
+ENV BUNDLER_VERSION 2.1.4
 
 ############################################
 
@@ -44,13 +43,18 @@ WORKDIR /tmp
 
 ### install RubyGems #######################
 
-COPY Gemfile Gemfile.lock Gemfile.local ./
+COPY Gemfile /tmp/Gemfile
+COPY Gemfile.lock /tmp/Gemfile.lock
+COPY Gemfile.local /tmp/Gemfile.local
+COPY bin /tmp/bin
 
 # RUN bundle config build.nokogiri --use-system-libraries \
 #  && bundle check || bundle install --jobs 5 --retry 5 \
 #  && bundle clean --force
+RUN bundler install
 RUN bundle check || bundle install --jobs 5 --retry 5 \
  && bundle clean --force
+
 
 ############################################
 
@@ -59,7 +63,7 @@ COPY . $APP_ROOT
 
 ### install node_modules ###################
 
-RUN bin/yarn install && npm rebuild node-sass
+# RUN bin/yarn install && npm rebuild node-sass
 
 ############################################
 

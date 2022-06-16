@@ -1,0 +1,68 @@
+:verbose: false
+:pidfile: ./tmp/sidekiq.pid
+:logfile: ./log/sidekiq.log
+:concurrency: 33
+:queues:
+  - high
+  - csv_download
+  - mailers
+  - default
+  - low_priority
+  - google_indexing_api
+:limits:
+  high: 5
+  csv_download: 3
+  mailers: 10
+  default: 5
+  low_priority: 5
+  google_indexing_api: 5
+:schedule:
+  test:
+    # cron: "0 * * * * *" # 毎分0秒
+    class: SampleWorker
+  switch_to_monthly_plan:
+    cron: "0 30 8 1 * *" # 毎月1日 8時40分
+    class: SwitchToMonthlyPlanWorker
+  renew_plan:
+    cron: "0 0 0 1 * *" # 毎月1日 0時0分
+    class: RenewPlanWorker
+  upsert_payment_requests:
+    cron: "0 50 8 1 * *" # 毎月1日 8時50分
+    class: UpsertPaymentRequestsWorker
+  send_contract_request_csv:
+    cron: "0 10 9 1 * *" # 毎月1日 9時10分
+    class: SendContractRequestCsvWorker
+  line_message_unread_notification:
+    cron: "0 0 8 * * *" # 毎日、8時
+    class: LineMessageUnreadNotificationWorker
+  # NOTICE: ファーストリリースでは未実装
+  # fetching_recruitment_provider:
+  #   cron: "0 * * * * *"
+  #   class: FetchingRecruitmentProviderWorker
+  update_company_function_setting_flags:
+    cron: "0 0 0 * * *" # 毎日、0時
+    class: SwitchCompanyFlagsWorker
+  # 以下のXML作成処理は残す。理由はECSタスクが動かなかった場合の救済措置。
+  # 現在、XML作成処理はECSスケジューラでECSタスクとして実行している。しかし、ECS不具合の際に、Sidekiq WebGUIから直接処理を実行できるように、処理自体は残しておく。
+  indeed_ats_cooperation:
+    # cron: "0 0 1,4,7,10,13,16,19,22 * * *" # 毎日、1,4,7,10,13,16,19,22時
+    class: IndeedAtsCooperationWorker
+  build_facebook_xml_feed:
+    # cron: "0 0 2,5,8,11,14,17,20,23 * * *" # 毎日、2,5,8,11,14,17,20,23時
+    class: BuildFacebookXmlFeedWorker
+  build_job_box_xml_feed:
+    # cron: "0 0 3,6,9,12,15,18,21 * * *" # 毎日、3,6,9,12,15,18,21時
+    class: BuildJobBoxXmlFeedWorker
+  build_stanby_xml_feed:
+    # cron: "0 30 2,5,8,11,14,17,20,23 * * *" # 毎日、2,5,8,11,14,17,20,23時の30分
+    class: StanbyXmlWorker
+  update_recruitment_status_based_on_scheduled_date:
+    cron: "0 0 0 * * *" # 毎日、0時
+    class: UpdateRecruitmentStatusWorker
+  quiet_sidekiq_process:
+    # sidekiq を quiet させる処理なので、cronは必要ない。
+    class: QuietSidekiqProcessWorker
+  notice_business_days:
+    # お盆休みが毎年変わるので、「営業日カレンダー」（business_days）は毎年入力する必要がある。入力漏れ防止の為の通知ワーカー。
+    cron: "0 0 9 * 12 *" # 毎年12月、毎日、9時
+    class: NotifyBusinessDaysWorker

@@ -1,6 +1,5 @@
 FROM nginx:alpine
 
-MAINTAINER Hiroyuki Tanaka <h.tanaka@datora.jp>
 
 ENV BUILD_PACKAGES="curl-dev bash" \
     LANG=ja_JP.UTF-8 \
