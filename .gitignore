@@ -38,3 +38,18 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.staging
+
+# End of https://www.gitignore.io/api/vim,node,ruby,rails,linux,macos
+/public/packs
+/public/packs-test
+/node_modules
+*.sh
+
+Gemfile.local
+Gemfile.local.lock
+docker-compose.yml
+.docker-sync
