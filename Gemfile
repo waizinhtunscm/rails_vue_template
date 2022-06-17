@@ -6,7 +6,7 @@ ruby '2.7.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.6'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -27,11 +27,11 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-gem "sidekiq"                              # 非同期処理
-gem "sidekiq-failures"                                 # Sidekiqの失敗Jobの詳細表示
-gem "sidekiq-scheduler"                    # Sidekiqでスケジューリング実行
-gem "sidekiq-unique-jobs"                  # Sidekiqで同じジョブが複数実行されないようにする
-gem 'sidekiq-limit_fetch'                  # SidekiqでQueue毎に同時実行数を制御できる
+gem "sidekiq"                              
+gem "sidekiq-failures"                                
+gem "sidekiq-scheduler"                   
+gem "sidekiq-unique-jobs"                 
+gem 'sidekiq-limit_fetch'                  
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,10 +1,10 @@
 ## 環境
 
 - Docker
-- Ruby 2.4
-- Ruby on Rails 5.1.4
+- Ruby 2.7.5
+- Ruby on Rails 6.1.6
 - Mysql 8.0
-* Ruby version
+
 ## 開発環境の構築
 ```
 $ git config --global core.autocrlf false

@@ -3,8 +3,6 @@
 :logfile: ./log/sidekiq.log
 :concurrency: 33
 :queues:
-  - high
-  - csv_download
   - mailers
   - default
   - low_priority
@@ -39,11 +37,6 @@
   # fetching_recruitment_provider:
   #   cron: "0 * * * * *"
   #   class: FetchingRecruitmentProviderWorker
-  update_company_function_setting_flags:
-    cron: "0 0 0 * * *" # 毎日、0時
-    class: SwitchCompanyFlagsWorker
-  # 以下のXML作成処理は残す。理由はECSタスクが動かなかった場合の救済措置。
-  # 現在、XML作成処理はECSスケジューラでECSタスクとして実行している。しかし、ECS不具合の際に、Sidekiq WebGUIから直接処理を実行できるように、処理自体は残しておく。
   indeed_ats_cooperation:
     # cron: "0 0 1,4,7,10,13,16,19,22 * * *" # 毎日、1,4,7,10,13,16,19,22時
     class: IndeedAtsCooperationWorker
@@ -56,13 +49,7 @@
   build_stanby_xml_feed:
     # cron: "0 30 2,5,8,11,14,17,20,23 * * *" # 毎日、2,5,8,11,14,17,20,23時の30分
     class: StanbyXmlWorker
-  update_recruitment_status_based_on_scheduled_date:
-    cron: "0 0 0 * * *" # 毎日、0時
-    class: UpdateRecruitmentStatusWorker
   quiet_sidekiq_process:
     # sidekiq を quiet させる処理なので、cronは必要ない。
     class: QuietSidekiqProcessWorker
-  notice_business_days:
-    # お盆休みが毎年変わるので、「営業日カレンダー」（business_days）は毎年入力する必要がある。入力漏れ防止の為の通知ワーカー。
-    cron: "0 0 9 * 12 *" # 毎年12月、毎日、9時
-    class: NotifyBusinessDaysWorker
+  

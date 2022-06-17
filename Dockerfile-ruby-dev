@@ -48,9 +48,7 @@ COPY Gemfile.lock /tmp/Gemfile.lock
 COPY Gemfile.local /tmp/Gemfile.local
 COPY bin /tmp/bin
 
-# RUN bundle config build.nokogiri --use-system-libraries \
-#  && bundle check || bundle install --jobs 5 --retry 5 \
-#  && bundle clean --force
+
 RUN bundler install
 RUN bundle check || bundle install --jobs 5 --retry 5 \
  && bundle clean --force
@@ -63,7 +61,7 @@ COPY . $APP_ROOT
 
 ### install node_modules ###################
 
-# RUN bin/yarn install && npm rebuild node-sass
+RUN bin/yarn install && npm rebuild node-sass
 
 ############################################
 

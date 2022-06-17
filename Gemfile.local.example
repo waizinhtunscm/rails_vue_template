@@ -1,7 +1,7 @@
 group :development, :test do
-  # gem "pry-byebug"             # pryでbyebugを利用する
-  # gem "pry-rails", "~> 0.3.6"  # pryデバッガ。rails consoleでirbからpryへ
+  # gem "pry-byebug"             # 
+  # gem "pry-rails", "~> 0.3.6"  # 
   # gem "ruby-debug-ide"         # Rubymineデバッガ
   # gem "debase"                 # Rubymineデバッガ
-  # gem "meta_request"           # Chrome拡張RailsPanelを使うのに必要
+  # gem "meta_request"           # 
 end
