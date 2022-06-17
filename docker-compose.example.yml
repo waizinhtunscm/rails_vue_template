@@ -1,0 +1,85 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: "Dockerfile-nginx"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./public:/usr/src/app/public
+    depends_on:
+      - app
+
+  app: &app_base
+    build:
+      context: .
+      dockerfile: "Dockerfile-ruby-dev"
+    command: bin/start_dev
+    volumes:
+      - bundle-data:/usr/local/bundle:cached
+      - .:/usr/src/app:cached 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - localstack
+    env_file:
+      - .env
+    tty: true
+    stdin_open: true
+
+  sidekiq:
+    <<: *app_base
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+    ports: []
+    depends_on: []
+    tty: false
+    stdin_open: false
+
+  sidekiq_for_heavy:
+    <<: *app_base
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq_for_heavy.yml"]
+    ports: []
+    depends_on: []
+    tty: false
+    stdin_open: false
+
+  db:
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    env_file: .env
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker_init/db/init/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker_init/db/init:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - 4566:4566 # edge port
+      - 8080:8080 # dashboard
+    environment:
+      SERVICES: s3
+      AWS_DEFAULT_REGION: ap-northeast-1
+      DEBUG: 1
+      LS_LOG: trace-internal
+      DATA_DIR: /tmp/localstack/data
+    volumes:
+      - ./docker_init/localstack/:/docker-entrypoint-initaws.d
+      - ./docker_init/localstack/aws_config:/root/.aws/
+volumes:
+  bundle-data:
+  db-data:
+  redis-data:
