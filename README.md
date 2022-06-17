@@ -11,7 +11,7 @@ $ git config --global core.autocrlf false
 ```
 #### Step1 このプロジェクトをCloneする
 ```bash
-$ git clone https://github.com/datorainc/recruit_cms.git
+$ git clone https://github.com/waizinhtunscm/rails_template.git
 ```
 #### Step2 開発環境ファイルの用意
 
