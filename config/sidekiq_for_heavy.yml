@@ -3,12 +3,9 @@
 :logfile: ./log/sidekiq_for_heavy.log
 :concurrency: 6
 :queues:
-  - csv_import_for_heavy_companies
-  - csv_import_for_light_companies
+  - mailers
 :limits:
-  csv_import_for_heavy_companies: 3
-  csv_import_for_light_companies: 3
+  mailers: 10
 :schedule:
   test:
-    # cron: "0 * * * * *" # 毎分0秒
     class: SampleWorkerForHeavy
