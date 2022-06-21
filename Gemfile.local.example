@@ -1,7 +1,0 @@
-group :development, :test do
-  # gem "pry-byebug"             # 
-  # gem "pry-rails", "~> 0.3.6"  # 
-  # gem "ruby-debug-ide"         # Rubymineデバッガ
-  # gem "debase"                 # Rubymineデバッガ
-  # gem "meta_request"           # 
-end
