@@ -51,5 +51,4 @@ yarn-debug.log*
 
 Gemfile.local
 Gemfile.local.lock
-docker-compose.yml
 .docker-sync
