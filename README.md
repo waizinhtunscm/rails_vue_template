@@ -1,54 +1,40 @@
-## 環境
+## environment
 
 - Docker
 - Ruby 2.7.5
 - Ruby on Rails 6.1.6
 - Mysql 8.0
 
-## 開発環境の構築
+## config
 ```
 $ git config --global core.autocrlf false
 ```
-#### Step1 このプロジェクトをCloneする
+## clone project
 ```bash
 $ git clone https://github.com/waizinhtunscm/rails_template.git
 ```
-#### Step2 開発環境ファイルの用意
-
-`.env` `docker-compose.yml` `Gemfile.local` は各自の環境毎に手を加えられるよう、exampleファイルのみGit管理しています。  
-以下コマンドを順次実行してください。  
+## development preparation
 
 ```bash
-# 環境変数
+# env file
 $ cp .env.example .env
 
-# docker-compose設定ファイル
-$ cp docker-compose.example.yml docker-compose.yml
-
-# 各自の開発環境でのみ必要となるGemfileを記述するGemfile
-$ cp Gemfile.local.example Gemfile.local
-```
-#### Step3 docker-composeを利用した開発環境の起動
-
-以下コマンドを順次実行してください。  
-
-```bash
-# DockerfileからDockerイメージ作成
+# Docker Image
 $ docker-compose build
 
-# appコンテナを一時起動しbashでアクセス
+# start the app  with bash
 $ docker-compose run --rm app bash
 
-# Nodeモジュールのインストール
+# Node module installation
 $ bin/yarn install
 
-# appコンテナへのアクセスを終了
+# stop app bash
 $ exit
 
-# docker-composeサービス群の起動
+# start app
 $ docker-compose up -d
 ```
-あとは `http://localhost:3000` にアクセスすればOKです。 
+`http://localhost:3000`
 
 
 
