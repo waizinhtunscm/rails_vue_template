@@ -45,7 +45,6 @@ WORKDIR /tmp
 
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
-COPY Gemfile.local /tmp/Gemfile.local
 COPY bin /tmp/bin
 
 
