@@ -79,6 +79,14 @@ services:
     volumes:
       - ./docker_init/localstack/:/docker-entrypoint-initaws.d
       - ./docker_init/localstack/aws_config:/root/.aws/
+  node:
+    build:
+      context: .
+      dockerfile: "Dockerfile-node"
+    ports:
+        - '8090:8080'
+    volumes:
+        - ./client:/var/www
 volumes:
   bundle-data:
   db-data:
