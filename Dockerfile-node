@@ -1,9 +1,8 @@
-FROM node:16.10.0-alpine
+FROM node:14.17.3-alpine
 
 WORKDIR /var/www
-# COPY . .
+COPY . .
 
 EXPOSE 8090
 
-
-# CMD ["sh", "-c" , "yarn global add @vue/cli && vue create ."]
+CMD ["sh", "-c", "yarn cache clean && yarn install && yarn serve"]
