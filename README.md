@@ -34,7 +34,7 @@ $ exit
 # start app
 $ docker-compose up -d
 ```
-`http://localhost:3000`
+`http://localhost:8090`
 
 
 
