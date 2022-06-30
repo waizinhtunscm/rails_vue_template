@@ -11,7 +11,7 @@ $ git config --global core.autocrlf false
 ```
 ## clone project
 ```bash
-$ git clone https://github.com/waizinhtunscm/rails_template.git
+$ git clone https://github.com/waizinhtunscm/rails_vue_template.git
 ```
 ## development preparation
 
